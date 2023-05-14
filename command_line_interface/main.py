@@ -17,17 +17,21 @@ def main() -> None:
         if user_command:
             command = Parser.command_check(user_command, COMANDS)
             if command:
-                if command != 'exit_commnad':
+                if command == 'hello_command':
+                    handler = commands_handler[command]
+                    result = handler
+                    print(result)
+                elif command == 'exit_command':
+                    handler = commands_handler[command]
+                    result = handler
+                    print(result)
+                    return
+                else:
                     handler = commands_handler[command]
                     result = handler(*data)
                     print(result)
-                else:
-                    handler = commands_handler[command]
-                    result = handler()
-                    print(result)
-                    return
             else:
-                print(Message.unknown_command_message(user_command))
+                print(Message.unknown_command_message)
         else:
             print(Message.empty_input_message)
 
