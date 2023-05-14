@@ -1,12 +1,14 @@
-from collections import UserDict
+
 
 import re
 
+
+from collections import UserDict
 from datetime import datetime
 
 
-from settings import ALLOWED_PHONE_TYPES
-from settings import DEFAULT_PHONE_TYPE
+from settings import ALLOWED_PHONE_TYPES, DEFAULT_PHONE_TYPE
+
 
 #Messages
 class Message:
@@ -111,7 +113,7 @@ class Phone(Field):
     @Field.value.setter
     def value(self, value: str):
         if value == None:
-            Field.value.fset(self, None)
+            pass
         else:
             if self.phone_validate(value):
                 Field.value.fset(self, value)
@@ -134,7 +136,7 @@ class Birthday(Field):
     @Field.value.setter
     def value(self, value: str):
         if value == None:
-            Field.value.fset(self, None)
+            pass
         else:
             birthday_date = self.birthday_normalize(value)
             if birthday_date:
@@ -142,11 +144,11 @@ class Birthday(Field):
             else:
                 raise BirthdayFormatError
     
-    def birthday_normalize(self, value: str) -> str:
+    def birthday_normalize(self, value: str) -> datetime:
         result = None
-        birthday_date = re.findall(fr'^\d\d-\d\d-\d\d\d\d$', value)
-        if birthday_date:
-            birthday_date = (datetime.strptime(''.join(birthday_date), '%d-%m-%Y'))
+        birthday_match = re.search(fr'^\d\d-\d\d-\d\d\d\d$', value)
+        if birthday_match[0]:
+            birthday_date = (datetime.strptime(birthday_match[0], '%d-%m-%Y'))
             if birthday_date < datetime.now():
                 result = birthday_date
         return result
