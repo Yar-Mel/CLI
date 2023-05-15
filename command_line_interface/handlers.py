@@ -1,7 +1,7 @@
 
 
 from methods import Message, AddressBook
-from methods import Record, Name, Phone, PhoneType, Birthday
+from methods import Record, Name, Phone, Birthday
 from methods import PhoneTypeError, PhoneFormatError, NameFormatError, BirthdayFormatError
 
 user_book = AddressBook()
@@ -34,30 +34,31 @@ def input_error(func) -> str:
 
 
 # ----------Handlers----------
+
+
 @ input_error
 def add_record(name: str, phone_number: str | None = None, phone_type: str | None = None, birthday: str | None = None) -> str:
     if name not in user_book.data:
         
         _name = Name(name)
-        _phone_type = PhoneType(phone_type)
-        _phone_number = Phone(phone_number)
+        _phone_number = Phone({phone_type: phone_number})
         _birthday = Birthday(birthday)
     
-        record = Record(_name, _phone_number, _phone_type, _birthday)
+        record = Record(_name, _phone_number, _birthday)
         user_book.add_record(record)
         return Message.add_message
     else:
         return Message.add_exists_message
 
 @ input_error
-def update_phone(name: str, new_phone_number: str, phone_type: str | None = None) -> str:
+def update_phone(name: str, phone_number: str, phone_type: str | None = None) -> str:
     
     _name = Name(name)
-    _phone_type = PhoneType(phone_type)
-    _new_phone_number = Phone(new_phone_number)
+    _phone_number = Phone({phone_type: phone_number})
     
     record = user_book.get_record(_name)
-    record.update_phone(_phone_type, _new_phone_number)
+    
+    record.update_phone(_phone_number)
     user_book.add_record(record)
     return Message.update_message
 
@@ -124,29 +125,39 @@ commands_handler = {
     }
 
 
-# name_1 = Name('Test_1')
-# name_2 = Name('Test_2')
-# name_3 = Name('Test_3')
-# name_4 = Name('Test_4')
-# name_5 = Name('Test_5')
+name_1 = Name('Test_1')
+name_2 = Name('Test_2')
+name_3 = Name('Test_3')
+name_4 = Name('Test_4')
+name_5 = Name('Test_5')
 
-# phone = Phone(None)
-# phone_type = PhoneType('work')
-# birthday_1 = Birthday(None)
-# birthday_2 = Birthday('13-05-2000')
-# birthday_3 = Birthday('14-05-2000')
-# birthday_4 = Birthday('15-05-2000')
-# birthday_5 = Birthday('16-05-2000')
+phone_1 = Phone({'mobile': '112223344'})
+phone_2 = Phone({'work': '112223344'})
+phone_3 = Phone({None: None})
+phone_4 = Phone({None: '112223344'})
+phone_5 = Phone({'home': None})
 
-# record_1 = Record(name_1, phone, phone_type, birthday_1)
-# record_2 = Record(name_2, phone, phone_type, birthday_2)
-# record_3 = Record(name_3, phone, phone_type, birthday_3)
-# record_4 = Record(name_4, phone, phone_type, birthday_4)
-# record_5 = Record(name_5, phone, phone_type, birthday_5)
+birthday_1 = Birthday(None)
+birthday_2 = Birthday('13-05-2000')
+birthday_3 = Birthday('14-05-2000')
+birthday_4 = Birthday('15-05-2000')
+birthday_5 = Birthday('16-05-2000')
 
+record_1 = Record(name_1, phone_1, birthday_1)
+record_2 = Record(name_2, phone_2, birthday_2)
+record_3 = Record(name_3, phone_3, birthday_3)
+record_4 = Record(name_4, phone_4, birthday_4)
+record_5 = Record(name_5, phone_5, birthday_5)
 
-# user_book.add_record(record_1)
-# user_book.add_record(record_2)
-# user_book.add_record(record_3)
-# user_book.add_record(record_4)
-# user_book.add_record(record_5)
+user_book.add_record(record_1)
+user_book.add_record(record_2)
+user_book.add_record(record_3)
+user_book.add_record(record_4)
+user_book.add_record(record_5)
+
+a = user_book.iterator(1)
+print(next(a))
+print(next(a))
+print(next(a))
+print(next(a))
+print(next(a))

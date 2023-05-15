@@ -15,19 +15,19 @@ def main() -> None:
         user_input = input('>>> ')
         user_command, data = Parser.input_parser(user_input)
         if user_command:
-            command = Parser.command_check(user_command, COMANDS)
-            if command:
-                if command == 'hello_command':
-                    handler = commands_handler[command]
+            valid_command = Parser.command_check(user_command, COMANDS)
+            if valid_command:
+                if valid_command == 'hello_command':
+                    handler = commands_handler[valid_command]
                     result = handler
                     print(result)
-                elif command == 'exit_command':
-                    handler = commands_handler[command]
+                elif valid_command == 'exit_command':
+                    handler = commands_handler[valid_command]
                     result = handler
                     print(result)
                     return
                 else:
-                    handler = commands_handler[command]
+                    handler = commands_handler[valid_command]
                     result = handler(*data)
                     print(result)
             else:

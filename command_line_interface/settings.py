@@ -1,6 +1,7 @@
 
 ALLOWED_PHONE_TYPES = ['mobile', 'work', 'home']
 DEFAULT_PHONE_TYPE = 'mobile'
+DEFAULT_EMPTY_FIELD = 'empty'
 
 
 
