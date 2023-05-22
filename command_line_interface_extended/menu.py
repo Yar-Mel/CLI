@@ -24,7 +24,7 @@ class General:
     
     file_operations = FileOperations
 
-    def create_or_restoe_records_book(self) -> RecordsBook:
+    def create_or_restore_records_book(self) -> RecordsBook:
         if self.AUTOSAVE_PATH.is_file():
             result = self.file_operations.import_from_pickle(self.AUTOSAVE_PATH)
         else:
@@ -613,7 +613,7 @@ class ExportMenu(General):
         raise ExitFromCLI
 
 
-records_book = General.create_or_restoe_records_book(self=General)
+records_book = General.create_or_restore_records_book(self=General)
 
 
 # def test_box() -> None:
