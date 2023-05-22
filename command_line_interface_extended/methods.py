@@ -358,10 +358,10 @@ class RecordsBook(UserDict):
         UserDict.__init__(self)
 
 # UPDATE BOOK
-    def update_records_book(self, another_records_book: dict) -> None:
+    def update(self, another_records_book: dict) -> None:
         self.data.update(another_records_book)
 
-    def clear_records_book(self) -> None:
+    def clear(self) -> None:
         self.data.clear()
 
 # RECORDS PROCESSING

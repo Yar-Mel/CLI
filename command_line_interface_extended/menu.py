@@ -16,8 +16,6 @@ from text_fields import ChangeRecordMenuText, ShowRecordsMenuText
 from text_fields import ImportMenuText, ExportMenuText
 
 
-records_book = RecordsBook()
-
 # ----------MENUS & SUBMENUS----------
 
 class General:
@@ -25,6 +23,13 @@ class General:
     AUTOSAVE_PATH = Path(os.getcwd()) / 'records_book_autosave.bin'
     
     file_operations = FileOperations
+
+    def create_or_restoe_records_book(self) -> RecordsBook:
+        if self.AUTOSAVE_PATH.is_file():
+            result = self.file_operations.import_from_pickle(self.AUTOSAVE_PATH)
+        else:
+            result = RecordsBook()
+        return result
 
     @error_handler
     def options_handler(self, user_command: str, options: dict) -> None:
@@ -44,7 +49,8 @@ class MainMenu(General):
         '2': self.option_change_record,
         '3': self.option_show_records,
         '4': self.option_import,
-        '5': self.option_export,        
+        '5': self.option_export,
+        '6': self.option_clear_records_book,
         'exit': self.option_exit_from_cli,
         }
         super().options_handler
@@ -80,8 +86,19 @@ class MainMenu(General):
         ImportMenu()
 
 # EXPORT
+    @error_handler
     def option_export(self) -> None:
         ExportMenu()
+
+# CLEAR RECORDS BOOK
+    @error_handler
+    def option_clear_records_book(self) -> None:
+        user_input = input(MainMenuText.clear_input)
+        if user_input == 'y':
+            records_book.clear()
+            print(MainMenuText.clear_successful_message)
+            input(GeneralText.continue_input_message)
+            MainMenu()
 
 # EXIT
     @error_handler    
@@ -124,10 +141,8 @@ class AddRecordMenu(General):
                 records_book.add_record(self.record)
                 self.record_book_autosave()
                 print(AddRecordMenuText.add_successful_message)
-                while True:
-                    user_input = input(GeneralText.continue_input_message)
-                    if user_input.strip() in GeneralText.CONTINUE:
-                        MainMenu()
+                input(GeneralText.continue_input_message)
+                MainMenu()
 
 # ADD FIELDS TO NEW RECORD
     @error_handler
@@ -241,6 +256,7 @@ class ChangeRecordMenu(General):
         records_book.delete_record(old_record)
         self.record_book_autosave()
         print(ChangeRecordMenuText.change_successful_message)
+        input(GeneralText.continue_input_message)
         self.change_record_menu()
 
 # CHANGE PHONE
@@ -258,6 +274,7 @@ class ChangeRecordMenu(General):
         records_book.add_record(self.record)
         self.record_book_autosave()
         print(ChangeRecordMenuText.change_successful_message)
+        input(GeneralText.continue_input_message)
         self.change_record_menu()        
 
 # CHANGE EMAIL
@@ -275,6 +292,7 @@ class ChangeRecordMenu(General):
         records_book.add_record(self.record)
         self.record_book_autosave()
         print(ChangeRecordMenuText.change_successful_message)
+        input(GeneralText.continue_input_message)
         self.change_record_menu()
     
 # CHANGE BIRTHDAY
@@ -292,6 +310,7 @@ class ChangeRecordMenu(General):
         records_book.add_record(self.record)
         self.record_book_autosave()
         print(ChangeRecordMenuText.change_successful_message)
+        input(GeneralText.continue_input_message)
         self.change_record_menu()
     
 # GET ANOTHER RECORD
@@ -300,6 +319,7 @@ class ChangeRecordMenu(General):
         while True:
             self.get_record_to_change()
 
+# DELETE RECORD
     @error_handler
     def option_delete_record(self) -> None:
         user_input = input(ChangeRecordMenuText.delete_input)
@@ -307,9 +327,9 @@ class ChangeRecordMenu(General):
             records_book.delete_record(self.record)
             self.record_book_autosave()
             print(ChangeRecordMenuText.delete_successful_message)
-            MainMenu()
-        else:
+            input(GeneralText.continue_input_message)
             self.change_record_menu()
+           
 
 # RETURN TO MAIN MENU
     @error_handler
@@ -374,10 +394,8 @@ class ShowRecordsMenu(General):
         result = records_book.find_record(user_input)
         if result:
             print(result)
-            while True:
-                user_input = input(GeneralText.continue_input_message)
-                if user_input in GeneralText.CONTINUE:
-                    ShowRecordsMenu()
+            input(GeneralText.continue_input_message)
+            ShowRecordsMenu()
         print(ShowRecordsMenuText.no_matches_message)
 
 # SHOW RECORD
@@ -393,28 +411,22 @@ class ShowRecordsMenu(General):
         self.options_handler(user_input, self.SUBMENU_OPTIONS)
         self.record = records_book.get_record(Name(user_input))
         print(self.record.show_record())
-        while True:
-            user_input = input(GeneralText.continue_input_message)
-            if user_input in GeneralText.CONTINUE:
-                ShowRecordsMenu()
+        input(GeneralText.continue_input_message)
+        ShowRecordsMenu()
 
 # SHOW ALL
     @error_handler
     def option_show_all(self) -> None:
         print(records_book.show_records())
-        while True:
-            user_input = input(GeneralText.continue_input_message)
-            if user_input.strip() in GeneralText.CONTINUE:
-                ShowRecordsMenu()
+        input(GeneralText.continue_input_message)   
+        ShowRecordsMenu()
 
 # DEBUG
     @error_handler
     def option_debug(self) -> None:
         print(records_book.data)
-        while True:
-            user_input = input(GeneralText.continue_input_message)
-            if user_input.strip() in GeneralText.CONTINUE:
-                ShowRecordsMenu()
+        input(GeneralText.continue_input_message)
+        ShowRecordsMenu()
 
 # RETURN TO SHOW RECORD MENU 
     @error_handler
@@ -455,17 +467,14 @@ class ImportMenu(General):
 
     @error_handler
     def import_records_book_from_pickle(self, path_from_user: str) -> None:
-        path_to_import = Path(path_from_user)
-        if path_to_import.is_file():
-            new_records_book = self.file_operations.import_from_pickle(path_to_import)
-            if isinstance(new_records_book, RecordsBook):
-                records_book.update_records_book(new_records_book)
+        path_for_import = Path(path_from_user)
+        if path_for_import.is_file():
+            imported_records_book = self.file_operations.import_from_pickle(path_for_import)
+            if isinstance(imported_records_book, RecordsBook):
+                records_book.update(imported_records_book)
                 print(ImportMenuText.import_records_book_successful_message)
-                # successful
-                while True:
-                    user_input = input(GeneralText.continue_input_message)
-                    if user_input.strip() in GeneralText.CONTINUE:
-                        MainMenu()
+                input(GeneralText.continue_input_message)
+                MainMenu()
 
 # RETURN TO MAIN MENU
     @error_handler
@@ -518,17 +527,14 @@ class ExportMenu(General):
     @error_handler
     def records_book_to_txt(self, path_from_user: str) -> None:
         if path_from_user == '':
-            path_to_export = Path(os.getcwd()) / 'records_book.txt'
+            path_for_export = Path(os.getcwd()) / 'records_book.txt'
         else:
-            path_to_export = Path(path_from_user+'.txt')
+            path_for_export = Path(path_from_user+'.txt')
         records_book_as_dict = records_book.convert_to_dict()
-        self.file_operations.export_to_txt(path_to_export, records_book_as_dict)
+        self.file_operations.export_to_txt(path_for_export, records_book_as_dict)
         print(ExportMenuText.records_book_successful_message)
-        # successful
-        while True:
-            user_input = input(GeneralText.continue_input_message)
-            if user_input.strip() in GeneralText.CONTINUE:
-                MainMenu()
+        input(GeneralText.continue_input_message)
+        MainMenu()
 
 # EXPORT TO PICKLE
     @error_handler
@@ -542,16 +548,13 @@ class ExportMenu(General):
     @error_handler
     def records_book_to_pickle(self, path_from_user: str) -> None:
         if path_from_user == '':
-            path_to_export = Path(os.getcwd()) / 'records_book.bin'
+            path_for_export = Path(os.getcwd()) / 'records_book.bin'
         else:
-            path_to_export = Path(path_from_user+'.pickle')
-        self.file_operations.export_to_pickle(path_to_export, records_book)
+            path_for_export = Path(path_from_user+'.pickle')
+        self.file_operations.export_to_pickle(path_for_export, records_book)
         print(ExportMenuText.records_book_successful_message)
-        # successful
-        while True:
-            user_input = input(GeneralText.continue_input_message)
-            if user_input.strip() in GeneralText.CONTINUE:
-                MainMenu()
+        input(GeneralText.continue_input_message)
+        MainMenu()
 
 # EXPORT TO JSON
     @error_handler
@@ -565,17 +568,14 @@ class ExportMenu(General):
     @error_handler   
     def records_book_to_json(self, path_from_user: str) -> None: #TODO
         if path_from_user == '':
-            path_to_export = Path(os.getcwd()) / 'records_book.json'
+            path_for_export = Path(os.getcwd()) / 'records_book.json'
         else:
-            path_to_export = Path(path_from_user+'.json')
+            path_for_export = Path(path_from_user+'.json')
         records_book_as_dict = records_book.convert_to_dict()
-        self.file_operations.export_to_json(path_to_export, records_book_as_dict)
+        self.file_operations.export_to_json(path_for_export, records_book_as_dict)
         print(ExportMenuText.records_book_successful_message)
-        # successful
-        while True:
-            user_input = input(GeneralText.continue_input_message)
-            if user_input.strip() in GeneralText.CONTINUE:
-                MainMenu()
+        input(GeneralText.continue_input_message)
+        MainMenu()
 
 # EXPORT TO CSV
     @error_handler
@@ -589,17 +589,14 @@ class ExportMenu(General):
     @error_handler
     def records_book_to_csv(self, path_from_user: str) -> None: #TODO
         if path_from_user == '':
-            path_to_export = Path(os.getcwd()) / 'records_book.csv'
+            path_for_export = Path(os.getcwd()) / 'records_book.csv'
         else:
-            path_to_export = Path(path_from_user+'.csv')
+            path_for_export = Path(path_from_user+'.csv')
         list_of_records = records_book.convert_record_to_list()
-        self.file_operations.export_to_csv(path_to_export, list_of_records)
+        self.file_operations.export_to_csv(path_for_export, list_of_records)
         print(ExportMenuText.records_book_successful_message)
-        # successful
-        while True:
-            user_input = input(GeneralText.continue_input_message)
-            if user_input.strip() in GeneralText.CONTINUE:
-                MainMenu()
+        input(GeneralText.continue_input_message)
+        MainMenu()
 
 # RETURN TO EXPORT OPTIONS
     @error_handler
@@ -614,6 +611,9 @@ class ExportMenu(General):
     @error_handler    
     def option_exit_from_cli(self) -> None:
         raise ExitFromCLI
+
+
+records_book = General.create_or_restoe_records_book(self=General)
 
 
 # def test_box() -> None:

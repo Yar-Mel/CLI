@@ -8,7 +8,7 @@ class GeneralText:
     
     start_message = \
     '\n{:^40}\n{:^40}\n'.format('---HELLO---', '-'*40)+\
-    '|{:^38}|\n'.format("I'M RECORDS BOOK v0.8.1")+\
+    '|{:^38}|\n'.format("I'M RECORDS BOOK v0.8.*")+\
     '|{:^38}|\n{:^40}\n'.format("NICE TO MEET YOU!", '-'*40)
     
     start_input_message = 'Enter "start" to begin!\n>>> '
@@ -27,8 +27,11 @@ class MainMenuText:
     '|{:^38}|\n{:^40}\n'.format('3. SHOW RECORDS', '-'*40)+\
     '|{:^38}|\n{:^40}\n'.format('4. IMPORT RECORDS BOOK', '-'*40)+\
     '|{:^38}|\n{:^40}\n'.format('5. EXPORT RECORDS BOOK', '-'*40)+\
+    '|{:^38}|\n{:^40}\n'.format('6. CLEAR RECORDS BOOK', '-'*40)+\
     '|{:^38}|\n{:^40}\n'.format('EXIT', '-'*40)
     input_message = 'You are in "MAIN MENU". Choose one of the options.\n>>> '
+    clear_successful_message = '\nThe record book has been cleared successfully!\n'
+    clear_input = 'Are you sure? Enter "y" to continue.\n>>> '
 
 
 class AddRecordMenuText:
