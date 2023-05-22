@@ -52,7 +52,7 @@ class MainMenu(General):
 
 # MAIN CALL
     @error_handler
-    def __call__(self):
+    def __call__(self) -> None:
         print(MainMenuText.options_message)
         while True:
             user_input = input(MainMenuText.input_message)
@@ -348,7 +348,7 @@ class ShowRecordsMenu(General):
 
 # MAIN CALL
     @error_handler
-    def __call__(self):
+    def __call__(self) -> None:
         if not records_book.data:
             print(ShowRecordsMenuText.empty_records_book_message)
             MainMenu()
@@ -361,13 +361,13 @@ class ShowRecordsMenu(General):
 
 # FIND RECORD
     @error_handler
-    def option_find_record(self):
+    def option_find_record(self) -> None:
         print(ShowRecordsMenuText.submenu_options_message)
         while True:
             self.find_and_show_record()
 
     @error_handler
-    def find_and_show_record(self):
+    def find_and_show_record(self) -> None:
         result = ''
         user_input = input(ShowRecordsMenuText.search_input_message)
         self.options_handler(user_input, self.SUBMENU_OPTIONS)
@@ -382,13 +382,13 @@ class ShowRecordsMenu(General):
 
 # SHOW RECORD
     @error_handler
-    def option_show_record(self):
+    def option_show_record(self) -> None:
         print(ShowRecordsMenuText.submenu_options_message)
         while True:
             self.get_and_show_record()
     
     @error_handler
-    def get_and_show_record(self):
+    def get_and_show_record(self) -> None:
         user_input = input(ShowRecordsMenuText.record_input_message)
         self.options_handler(user_input, self.SUBMENU_OPTIONS)
         self.record = records_book.get_record(Name(user_input))
@@ -400,7 +400,7 @@ class ShowRecordsMenu(General):
 
 # SHOW ALL
     @error_handler
-    def option_show_all(self):
+    def option_show_all(self) -> None:
         print(records_book.show_records())
         while True:
             user_input = input(GeneralText.continue_input_message)
@@ -409,7 +409,7 @@ class ShowRecordsMenu(General):
 
 # DEBUG
     @error_handler
-    def option_debug(self):
+    def option_debug(self) -> None:
         print(records_book.data)
         while True:
             user_input = input(GeneralText.continue_input_message)
@@ -418,17 +418,17 @@ class ShowRecordsMenu(General):
 
 # RETURN TO SHOW RECORD MENU 
     @error_handler
-    def option_retun_to_show_record_menu(self):
+    def option_retun_to_show_record_menu(self) -> None:
         ShowRecordsMenu()
 
 # RETURN TO MAIN MENU
     @error_handler
-    def option_retun_to_main_menu(self):
+    def option_retun_to_main_menu(self) -> None:
         MainMenu()
 
 # EXIT
     @error_handler
-    def option_exit_from_cli(self):
+    def option_exit_from_cli(self) -> None:
         raise ExitFromCLI
 
 
@@ -616,47 +616,47 @@ class ExportMenu(General):
         raise ExitFromCLI
 
 
-def test_box() -> None:
-    name_1 = Name('test')
-    name_2 = Name('Scottie Bailey')
-    name_3 = Name('James Caporal')
-    name_4 = Name('Daniela Diaz')
-    name_5 = Name('Evan Eurs')
+# def test_box() -> None:
+#     name_1 = Name('test')
+#     name_2 = Name('Scottie Bailey')
+#     name_3 = Name('James Caporal')
+#     name_4 = Name('Daniela Diaz')
+#     name_5 = Name('Evan Eurs')
 
-    phone_1 = Phone('   111111111111    mobile')
-    phone_2 = Phone('esrser 222222222222 ')
-    phone_3 = Phone('    333333333333 work')
-    phone_4 = Phone('444444444444serrse')
-    phone_5 = Phone('esrser555555555555 home')
+#     phone_1 = Phone('   111111111111    mobile')
+#     phone_2 = Phone('esrser 222222222222 ')
+#     phone_3 = Phone('    333333333333 work')
+#     phone_4 = Phone('444444444444serrse')
+#     phone_5 = Phone('esrser555555555555 home')
 
-    birthday_1 = Birthday('17-05-2000')
-    birthday_2 = Birthday('18-05-2000')
-    birthday_3 = Birthday('19-05-2000')
-    birthday_4 = Birthday('20-05-2000')
-    birthday_5 = Birthday(None)
+#     birthday_1 = Birthday('17-05-2000')
+#     birthday_2 = Birthday('18-05-2000')
+#     birthday_3 = Birthday('19-05-2000')
+#     birthday_4 = Birthday('20-05-2000')
+#     birthday_5 = Birthday(None)
 
-    email_1 = Email('example@email.net')
-    email_2 = Email('example@email.net')
-    email_3 = Email('example@email.net')
-    email_4 = Email('example@email.net')
-    email_5 = Email(None)
+#     email_1 = Email('example@email.net')
+#     email_2 = Email('example@email.net')
+#     email_3 = Email('example@email.net')
+#     email_4 = Email('example@email.net')
+#     email_5 = Email(None)
     
-    record_1 = Record(name_1, phone_1, email_1, birthday_1)
+#     record_1 = Record(name_1, phone_1, email_1, birthday_1)
     
-    record_1.add_phone(phone_3)
-    record_1.add_phone(phone_4)
-    record_1.add_phone(phone_5)
+#     record_1.add_phone(phone_3)
+#     record_1.add_phone(phone_4)
+#     record_1.add_phone(phone_5)
     
-    record_2 = Record(name_2, phone_2, email_2, birthday_2)
-    record_3 = Record(name_3, phone_3, email_3, birthday_3)
-    record_4 = Record(name_4, phone_4, email_4, birthday_4)
-    record_5 = Record(name_5, phone_5, email_5, birthday_5)
+#     record_2 = Record(name_2, phone_2, email_2, birthday_2)
+#     record_3 = Record(name_3, phone_3, email_3, birthday_3)
+#     record_4 = Record(name_4, phone_4, email_4, birthday_4)
+#     record_5 = Record(name_5, phone_5, email_5, birthday_5)
     
     
-    records_book.add_record(record_1)
-    records_book.add_record(record_2)
-    records_book.add_record(record_3)
-    records_book.add_record(record_4)
-    records_book.add_record(record_5)
+#     records_book.add_record(record_1)
+#     records_book.add_record(record_2)
+#     records_book.add_record(record_3)
+#     records_book.add_record(record_4)
+#     records_book.add_record(record_5)
 
-test_box()
+# test_box()

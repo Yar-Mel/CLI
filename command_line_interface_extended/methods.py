@@ -4,7 +4,7 @@ import pickle
 import json
 import csv
 
-from pathlib import Path
+
 from datetime import datetime
 from collections import UserDict
 
@@ -19,11 +19,11 @@ class Field:
         self.value = value
 
     @property
-    def value(self):
+    def value(self) -> None:
         return self.__value
 
     @value.setter
-    def value(self, new_value):
+    def value(self, new_value) -> None:
         self.__value = new_value
 
 
@@ -120,7 +120,7 @@ class Email(Field):
         else:
             Field.value.fset(self, MethodsText.DEFAULT_EMPTY_FIELD)
 
-    def email_parser(self, value: str) -> bool:
+    def email_parser(self, value: str) -> str:
         email = None
         match = re.search(r"[a-zA-Z]{1}[a-zA-Z0-9_.]+@[a-zA-Z]+\.[a-zA-Z]{2,}", value)
         if match:
@@ -299,7 +299,7 @@ class Record:
         return result
 
 # RECORD CONVERSION
-    def record_to_dict(self) -> dict:
+    def record_to_dict(self) -> dict: #TODO
         result = None
         if isinstance(self.birthday.value, datetime):
             result = {
@@ -317,7 +317,7 @@ class Record:
             }
         return result
 
-    def record_to_list(self) -> list:
+    def record_to_list(self) -> list: #TODO
         result = []
         phones = ''
         name = ''
@@ -427,7 +427,6 @@ class RecordsBook(UserDict):
                 result = ''
                 count = 0
 
-
 # RECORDS BOOK CONVERSION
     def convert_to_dict(self) -> dict: #TODO
         result = {}
@@ -470,7 +469,7 @@ class FileOperations:
             json.dump(some_data, fh)
 
 # CSV
-    def export_to_csv(file_path, some_list: list) -> None: #TODO
+    def export_to_csv(file_path, some_list: list) -> None:
         with open(file_path, 'w', newline='') as fh:
             record_writer = csv.writer(fh)
             for row in some_list:
@@ -499,8 +498,8 @@ def error_handler(func) -> str:
             print(ErrorsText.index_error_message)
         except KeyError:
             print(ErrorsText.key_error_message)
-        # except TypeError:
-        #     print(ErrorsText.type_error_message)
+        except TypeError:
+            print(ErrorsText.type_error_message)
         except ValueError:
             print(ErrorsText.value_error_message)
         except NameError:
