@@ -321,6 +321,8 @@ class Record:
         result = []
         phones = ''
         name = ''
+        birthday = ''
+        email = ''
         first_name, last_name = self.name.value
         if first_name:
             if last_name != MethodsText.DEFAULT_EMPTY_FIELD:
@@ -339,16 +341,12 @@ class Record:
         
         if self.email.value != MethodsText.DEFAULT_EMPTY_FIELD:
             email = self.email.value
-        else:
-            email = ''
                 
         result.append(email)
 
-        if birthday != MethodsText.DEFAULT_EMPTY_FIELD:
+        if self.birthday != MethodsText.DEFAULT_EMPTY_FIELD:
             if isinstance(self.birthday.value, datetime):
                 birthday = self.birthday.value.strftime('%d-%m-%Y')
-        else:
-            birthday = ''
         
         result.append(birthday)
         return result
@@ -431,7 +429,6 @@ class RecordsBook(UserDict):
 
 
 # RECORDS BOOK CONVERSION
-
     def convert_to_dict(self) -> dict: #TODO
         result = {}
         list_of_records = self.iterator()
@@ -440,9 +437,11 @@ class RecordsBook(UserDict):
             result.update(data)
         return result
 
-    def convert_record_to_list_generator(self) -> list:
+    def convert_record_to_list(self) -> list:
+        result = [['No', 'Name', 'Phones', 'Email', 'Birthday']]
         for indx, record in enumerate(self.data.values()):
-            yield [indx+1]+record.record_to_list()
+            result.append([indx+1]+record.record_to_list())
+        return result
 
 
 class FileOperations:
@@ -471,11 +470,11 @@ class FileOperations:
             json.dump(some_data, fh)
 
 # CSV
-    def export_to_csv(file_path, head_of_table: list, some_list: list) -> None: #TODO
+    def export_to_csv(file_path, some_list: list) -> None: #TODO
         with open(file_path, 'w', newline='') as fh:
             record_writer = csv.writer(fh)
-            record_writer.writerow(head_of_table)
-            record_writer.writerows(some_list)
+            for row in some_list:
+                record_writer.writerow(row)
 
 
 # ERRORS

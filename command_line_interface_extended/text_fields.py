@@ -60,11 +60,6 @@ class ChangeRecordMenuText:
     empty_records_book_message = '\nRecord book is empty. Nothing to change.\n'
     record_not_exists_message = "\nRecord do not exists. First create record\n"
     input_message = 'You are in "CHANGE RECORD MENU". What do you want to change?\n>>> '
-class ChangeRecordSubmenuText:
-    options_message = \
-    '\n{:^40}\n{:^40}\n'.format('---CHANGE RECORD SUBMENU---', '-'*40)+\
-    '|{:^38}|\n{:^40}\n'.format('0. RETURN TO CHANGE RECORD MENU', '-'*40)+\
-    '|{:^38}|\n{:^40}\n'.format('EXIT', '-'*40)
     
     record_input_message = 'Input name of record.\n>>> '
     name_input_message = 'Input new name for user.\n>>> '
@@ -74,6 +69,17 @@ class ChangeRecordSubmenuText:
     change_successful_message = '\nRecord has been successfully changed.\n'
     delete_input = 'Are you sure? Enter "y" to continue.\n>>> '
     delete_successful_message = '\nRecord has been successfully deleted.\n'
+    
+    
+    premenu_options_message = \
+    '\n{:^40}\n{:^40}\n'.format('---CHANGE RECORD PREMENU---', '-'*40)+\
+    '|{:^38}|\n{:^40}\n'.format('0. RETURN TO MAIN MENU', '-'*40)+\
+    '|{:^38}|\n{:^40}\n'.format('EXIT', '-'*40)
+    
+    submenu_options_message = \
+    '\n{:^40}\n{:^40}\n'.format('---CHANGE RECORD SUBMENU---', '-'*40)+\
+    '|{:^38}|\n{:^40}\n'.format('0. RETURN TO CHANGE RECORD MENU', '-'*40)+\
+    '|{:^38}|\n{:^40}\n'.format('EXIT', '-'*40)
 
 
 class ShowRecordsMenuText:
@@ -83,12 +89,12 @@ class ShowRecordsMenuText:
     '|{:^38}|\n{:^40}\n'.format('2. SHOW RECORD', '-'*40)+\
     '|{:^38}|\n{:^40}\n'.format('3. SHOW ALL RECORDS', '-'*40)+\
     '|{:^38}|\n{:^40}\n'.format('4. DEBUG', '-'*40)+\
-    '|{:^38}|\n{:^40}\n'.format('0. RETURN TO PREVIOUS MENU', '-'*40)+\
+    '|{:^38}|\n{:^40}\n'.format('0. RETURN TO MAIN MENU', '-'*40)+\
     '|{:^38}|\n{:^40}\n'.format('EXIT', '-'*40)
     
     submenu_options_message = \
     '\n{:^40}\n{:^40}\n'.format('---SHOW RECORDS SUBMENU---', '-'*40)+\
-    '|{:^38}|\n{:^40}\n'.format('0. RETURN TO PREVIOUS MENU', '-'*40)+\
+    '|{:^38}|\n{:^40}\n'.format('0. RETURN TO CHANGE RECORD MENU', '-'*40)+\
     '|{:^38}|\n{:^40}\n'.format('EXIT', '-'*40)
     
     input_message = 'You are in "SHOW RECORDS MENU". Choose one of the options.\n>>> '
@@ -117,7 +123,7 @@ class ExportMenuText:
     '|{:^38}|\n{:^40}\n'.format('2. PICKLE (RECOMENDED FOR BACKUP)', '-'*40)+\
     '|{:^38}|\n{:^40}\n'.format('3. JSON', '-'*40)+\
     '|{:^38}|\n{:^40}\n'.format('4. CSV (TABLE WIEV)', '-'*40)+\
-    '|{:^38}|\n{:^40}\n'.format('0. RETURN TO PREVIOUS MENU', '-'*40)+\
+    '|{:^38}|\n{:^40}\n'.format('0. RETURN TO MAIN MENU', '-'*40)+\
     '|{:^38}|\n{:^40}\n'.format('EXIT', '-'*40)
     
     submenu_options_message = \

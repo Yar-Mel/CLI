@@ -12,8 +12,8 @@ from methods import error_handler
 
 
 from text_fields import GeneralText, MainMenuText, AddRecordMenuText
-from text_fields import ChangeRecordMenuText, ChangeRecordSubmenuText
-from text_fields import ShowRecordsMenuText, ImportMenuText, ExportMenuText
+from text_fields import ChangeRecordMenuText, ShowRecordsMenuText
+from text_fields import ImportMenuText, ExportMenuText
 
 
 records_book = RecordsBook()
@@ -25,13 +25,6 @@ class General:
     AUTOSAVE_PATH = Path(os.getcwd()) / 'records_book_autosave.bin'
     
     file_operations = FileOperations
-    
-    # def restore_records_book(self) -> RecordsBook:
-    #     if self.AUTOSAVE_PATH.is_file():
-    #         result = self.file_operations.import_pickle(self.AUTOSAVE_PATH)
-    #     else:
-    #         result = RecordsBook()
-    #     return result
 
     @error_handler
     def options_handler(self, user_command: str, options: dict) -> None:
@@ -40,7 +33,7 @@ class General:
             options[command]()
 
     def record_book_autosave(self):
-        self.file_operations.export_pickle(self.AUTOSAVE_PATH, records_book)
+        self.file_operations.export_to_pickle(self.AUTOSAVE_PATH, records_book)
 
 
 class MainMenu(General):
@@ -209,14 +202,14 @@ class ChangeRecordMenu(General):
             print(ChangeRecordMenuText.empty_records_book_message)
             MainMenu()
         else:
-            print(ChangeRecordSubmenuText.options_message)
+            print(ChangeRecordMenuText.premenu_options_message)
             while True:
                 self.get_record_to_change()
 
 # GET RECORD
     @error_handler
     def get_record_to_change(self) -> None:
-        user_input = input(ChangeRecordSubmenuText.record_input_message)
+        user_input = input(ChangeRecordMenuText.record_input_message)
         self.options_handler(user_input, self.PREMENU_OPTIONS)
         self.record = records_book.get_record(Name(user_input))
         self.change_record_menu()
@@ -234,71 +227,71 @@ class ChangeRecordMenu(General):
 #CHANGE NAME
     @error_handler
     def option_change_name(self) -> None:
-        print(ChangeRecordSubmenuText.options_message)
+        print(ChangeRecordMenuText.submenu_options_message)
         while True:
             self.change_name_in_record()
 
     @error_handler
     def change_name_in_record(self) -> None:
-        user_input = input(ChangeRecordSubmenuText.name_input_message)
+        user_input = input(ChangeRecordMenuText.name_input_message)
         self.options_handler(user_input, self.SUBMENU_OPTIONS)
         old_record = deepcopy(self.record)
         self.record.add_name(Name(user_input))
         records_book.add_record(self.record)
         records_book.delete_record(old_record)
         self.record_book_autosave()
-        print(ChangeRecordSubmenuText.change_successful_message)
+        print(ChangeRecordMenuText.change_successful_message)
         self.change_record_menu()
 
 # CHANGE PHONE
     @error_handler
     def option_change_phone(self) -> None:
-        print(ChangeRecordSubmenuText.options_message)
+        print(ChangeRecordMenuText.submenu_options_message)
         while True:
             self.change_phone_in_record()
 
     @error_handler
     def change_phone_in_record(self) -> None:
-        user_input = input(ChangeRecordSubmenuText.phone_input_message)
+        user_input = input(ChangeRecordMenuText.phone_input_message)
         self.options_handler(user_input, self.SUBMENU_OPTIONS)        
         self.record.add_phone(Phone(user_input))
         records_book.add_record(self.record)
         self.record_book_autosave()
-        print(ChangeRecordSubmenuText.change_successful_message)
+        print(ChangeRecordMenuText.change_successful_message)
         self.change_record_menu()        
 
 # CHANGE EMAIL
     @error_handler
     def option_change_email(self) -> None:
-        print(ChangeRecordSubmenuText.options_message)
+        print(ChangeRecordMenuText.submenu_options_message)
         while True:
             self.change_email_in_record()
 
     @error_handler
     def change_email_in_record(self) -> None:
-        user_input = input(ChangeRecordSubmenuText.email_input_message)
+        user_input = input(ChangeRecordMenuText.email_input_message)
         self.options_handler(user_input, self.SUBMENU_OPTIONS)
         self.record.add_email(Email(user_input))
         records_book.add_record(self.record)
         self.record_book_autosave()
-        print(ChangeRecordSubmenuText.change_successful_message)
+        print(ChangeRecordMenuText.change_successful_message)
         self.change_record_menu()
     
 # CHANGE BIRTHDAY
     @error_handler 
     def option_change_birthday(self) -> None:
-        print(ChangeRecordSubmenuText.options_message)
+        print(ChangeRecordMenuText.submenu_options_message)
         while True:
             self.change_birthday_in_record()
     
     @error_handler
     def change_birthday_in_record(self) -> None:
-        user_input = input(ChangeRecordSubmenuText.birthday_input_message)
+        user_input = input(ChangeRecordMenuText.birthday_input_message)
         self.options_handler(user_input, self.SUBMENU_OPTIONS)
         self.record.add_birthday(Birthday(user_input))
         records_book.add_record(self.record)
         self.record_book_autosave()
-        print(ChangeRecordSubmenuText.change_successful_message)
+        print(ChangeRecordMenuText.change_successful_message)
         self.change_record_menu()
     
 # GET ANOTHER RECORD
@@ -309,11 +302,11 @@ class ChangeRecordMenu(General):
 
     @error_handler
     def option_delete_record(self) -> None:
-        user_input = input(ChangeRecordSubmenuText.delete_input)
+        user_input = input(ChangeRecordMenuText.delete_input)
         if user_input == 'y':
             records_book.delete_record(self.record)
             self.record_book_autosave()
-            print(ChangeRecordSubmenuText.delete_successful_message)
+            print(ChangeRecordMenuText.delete_successful_message)
             MainMenu()
         else:
             self.change_record_menu()
@@ -599,9 +592,8 @@ class ExportMenu(General):
             path_to_export = Path(os.getcwd()) / 'records_book.csv'
         else:
             path_to_export = Path(path_from_user+'.csv')
-        head_of_table = ['No', 'Name', 'Phones', 'Email', 'Birthday']
-        list_of_records = records_book.convert_record_to_list_generator()
-        self.file_operations.export_to_csv(path_to_export, head_of_table, list_of_records)
+        list_of_records = records_book.convert_record_to_list()
+        self.file_operations.export_to_csv(path_to_export, list_of_records)
         print(ExportMenuText.records_book_successful_message)
         # successful
         while True:
@@ -624,45 +616,47 @@ class ExportMenu(General):
         raise ExitFromCLI
 
 
-# def test_box() -> None:
-#     name_1 = Name('Ally Aagaard')
-#     name_2 = Name('Scottie Bailey')
-#     name_3 = Name('James Caporal')
-#     name_4 = Name('Daniela Diaz')
-#     name_5 = Name('Evan Eurs')
+def test_box() -> None:
+    name_1 = Name('test')
+    name_2 = Name('Scottie Bailey')
+    name_3 = Name('James Caporal')
+    name_4 = Name('Daniela Diaz')
+    name_5 = Name('Evan Eurs')
 
-#     phone_1 = Phone('   111111111111    mobile')
-#     phone_2 = Phone('esrser 222222222222 ')
-#     phone_3 = Phone('    333333333333 work')
-#     phone_4 = Phone('444444444444serrse')
-#     phone_5 = Phone('esrser555555555555 home')
+    phone_1 = Phone('   111111111111    mobile')
+    phone_2 = Phone('esrser 222222222222 ')
+    phone_3 = Phone('    333333333333 work')
+    phone_4 = Phone('444444444444serrse')
+    phone_5 = Phone('esrser555555555555 home')
 
-#     birthday_1 = Birthday('17-05-2000')
-#     birthday_2 = Birthday('18-05-2000')
-#     birthday_3 = Birthday('19-05-2000')
-#     birthday_4 = Birthday('20-05-2000')
-#     birthday_5 = Birthday(None)
+    birthday_1 = Birthday('17-05-2000')
+    birthday_2 = Birthday('18-05-2000')
+    birthday_3 = Birthday('19-05-2000')
+    birthday_4 = Birthday('20-05-2000')
+    birthday_5 = Birthday(None)
 
-#     email_1 = Email('example@email.net')
-#     email_2 = Email('example@email.net')
-#     email_3 = Email('example@email.net')
-#     email_4 = Email('example@email.net')
-#     email_5 = Email(None)
+    email_1 = Email('example@email.net')
+    email_2 = Email('example@email.net')
+    email_3 = Email('example@email.net')
+    email_4 = Email('example@email.net')
+    email_5 = Email(None)
     
-#     record_1 = Record(name_1, phone_1, email_1, birthday_1)
+    record_1 = Record(name_1, phone_1, email_1, birthday_1)
     
-#     record_1.add_phone(phone_3)
-#     record_1.add_phone(phone_4)
-#     record_1.add_phone(phone_5)
+    record_1.add_phone(phone_3)
+    record_1.add_phone(phone_4)
+    record_1.add_phone(phone_5)
     
-#     record_2 = Record(name_2, phone_2, email_2, birthday_2)
-#     record_3 = Record(name_3, phone_3, email_3, birthday_3)
-#     record_4 = Record(name_4, phone_4, email_4, birthday_4)
-#     record_5 = Record(name_5, phone_5, email_5, birthday_5)
+    record_2 = Record(name_2, phone_2, email_2, birthday_2)
+    record_3 = Record(name_3, phone_3, email_3, birthday_3)
+    record_4 = Record(name_4, phone_4, email_4, birthday_4)
+    record_5 = Record(name_5, phone_5, email_5, birthday_5)
     
     
-#     records_book.add_record(record_1)
-#     records_book.add_record(record_2)
-#     records_book.add_record(record_3)
-#     records_book.add_record(record_4)
-#     records_book.add_record(record_5)
+    records_book.add_record(record_1)
+    records_book.add_record(record_2)
+    records_book.add_record(record_3)
+    records_book.add_record(record_4)
+    records_book.add_record(record_5)
+
+test_box()
