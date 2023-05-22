@@ -19,9 +19,9 @@ from text_fields import ImportMenuText, ExportMenuText
 # ----------MENUS & SUBMENUS----------
 
 class General:
-    
+
     AUTOSAVE_PATH = Path(os.getcwd()) / 'records_book_autosave.bin'
-    
+
     file_operations = FileOperations
 
     def create_or_restore_records_book(self) -> RecordsBook:
@@ -215,6 +215,7 @@ class ChangeRecordMenu(General):
     def __call__(self) -> None:
         if not records_book.data:
             print(ChangeRecordMenuText.empty_records_book_message)
+            input(GeneralText.continue_input_message)
             MainMenu()
         else:
             print(ChangeRecordMenuText.premenu_options_message)
@@ -371,6 +372,7 @@ class ShowRecordsMenu(General):
     def __call__(self) -> None:
         if not records_book.data:
             print(ShowRecordsMenuText.empty_records_book_message)
+            input(GeneralText.continue_input_message)
             MainMenu()
         else:
             while True:
@@ -544,7 +546,7 @@ class ExportMenu(General):
             user_input = input(ExportMenuText.pickle_path_input_message)
             self.options_handler(user_input, self.SUBMENU_OPTIONS)
             self.records_book_to_pickle(user_input)
- 
+
     @error_handler
     def records_book_to_pickle(self, path_from_user: str) -> None:
         if path_from_user == '':

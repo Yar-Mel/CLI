@@ -13,8 +13,8 @@ class GeneralText:
     
     start_input_message = 'Enter "start" to begin!\n>>> '
     hello_message = '\nHow can I help you?'
-    exit_message = '\nleaving so soon? Okay...'
-    wrong_input_message = '\nHmm.. Somesing wrong. Look at the menu and try again.\n'
+    exit_message = '\nleaving so soon? Okay...\n'
+    wrong_input_message = '\nHmm.. Somesing wrong. Try again.\n'
     continue_input_message = 'Press enter to continue.\n>>> '
 
 
@@ -151,7 +151,9 @@ class ErrorsText:
     name_error_message = '\nFirst name or last name must be greater than one symbol and less than 16 symbols\n'
     email_error_message = '\nEmail must be less than 32 char and valid!\n'
     birthday_error_message = '\nBirthday must be in [dd-mm-yyyy] format and not in the future!\n'
-    exit_message = '\nGood bye! Hope we meet again!'
+    exit_message = \
+    '\n{:^40}\n'.format('---GOOD BYE---')+\
+    '\n{:^40}\n'.format("HOPE WE MEET AGAIN!")
 
 
 class MethodsText:

@@ -10,12 +10,12 @@ def main() -> None:
     while True:
         user_input = input(GeneralText.start_input_message)
         if user_input in GeneralText.EXIT:
-            GeneralText.exit_message
+            print(GeneralText.exit_message)
             return
         elif user_input in GeneralText.START:
             MainMenu()
         else:
-            GeneralText.wrong_input_message
+            print(GeneralText.wrong_input_message)
 
 
 # ----------ENTRY POINT----------
