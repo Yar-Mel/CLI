@@ -1,18 +1,10 @@
-import sys
-import re
-import pickle
-import json
-import csv
 
+from project_willy.methods.imports import re, datetime, UserDict
 
-from datetime import datetime
-from collections import UserDict
+from project_willy.methods.errors import NameError, PhoneError, EmailError, BirthdayError
 
+from project_willy.text_fields.methods_text import MethodsText
 
-from text_fields import MethodsText, ErrorsText
-
-
-# METHODS
 class Field:
     def __init__(self, value) -> None:
         self.__value = None
@@ -206,7 +198,10 @@ class Record:
         result = None
         current_date = datetime.now()
         if isinstance(birthday, datetime):
-            current_year_birthday = datetime(year=current_date.year, month=birthday.month, day=birthday.day+1)
+            try:
+                current_year_birthday = datetime(year=current_date.year, month=birthday.month, day=birthday.day+1)
+            except ValueError:
+                current_year_birthday = datetime(year=current_date.year, month=3, day=1)
             if current_year_birthday < current_date:
                 next_year_birthday = datetime(year=current_date.year+1, month=birthday.month, day=birthday.day)
                 result = next_year_birthday - current_date
@@ -442,78 +437,6 @@ class RecordsBook(UserDict):
             result.append([indx+1]+record.record_to_list())
         return result
 
-
-class FileOperations:
-
-# TXT
-    def export_to_txt(file_path, some_dict: dict) -> None:
-        result = ''
-        with open(file_path, 'w') as fh:
-            for k, v in some_dict.items():
-                result += f'{k}: {v}\n'
-            fh.write(result)
-
-# PICKLE
-    def export_to_pickle(file_path, some_data) -> None:
-        with open(file_path, "wb") as fh:
-            pickle.dump(some_data, fh)
-
-    def import_from_pickle(file_path):
-        with open(file_path, "rb") as fh:
-            result = pickle.load(fh)
-        return result
-
-# JSON
-    def export_to_json(file_path, some_data) -> None:
-        with open(file_path, "w") as fh:
-            json.dump(some_data, fh)
-
-# CSV
-    def export_to_csv(file_path, some_list: list) -> None:
-        with open(file_path, 'w', newline='') as fh:
-            record_writer = csv.writer(fh)
-            for row in some_list:
-                record_writer.writerow(row)
-
-
-# ERRORS
-class ExitFromCLI(Exception):
-    pass
-class NameError(Exception):
-    pass
-class PhoneError(Exception):
-    pass
-class EmailError(Exception):
-    pass
-class BirthdayError(Exception):
-    pass
-
-
-# ERRORS PROCESSING
-def error_handler(func) -> str:
-    def wrapper(*args, **kwargs):
-        try:
-            result = func(*args, **kwargs)
-        except IndexError:
-            print(ErrorsText.index_error_message)
-        except KeyError:
-            print(ErrorsText.key_error_message)
-        except TypeError:
-            print(ErrorsText.type_error_message)
-        except ValueError:
-            print(ErrorsText.value_error_message)
-        except NameError:
-            print(ErrorsText.name_error_message)
-        except PhoneError:
-            print(ErrorsText.phone_error_message)
-        except EmailError:
-            print(ErrorsText.email_error_message)
-        except BirthdayError:
-            print(ErrorsText.birthday_error_message)
-        except ExitFromCLI:
-            print(ErrorsText.exit_message)
-            sys.exit()
-        else:
-            return result
-    return wrapper
-
+# RECORDS CALCULATING
+    def records_calculatig(self) -> str:
+        return f'Number of records in the book: {len(self.data)}\n'
