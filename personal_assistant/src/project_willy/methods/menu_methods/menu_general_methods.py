@@ -7,9 +7,9 @@ class MenuGeneral(MenuReprSettings):
     
 # MENU REPRESENTATION
     def show_menu(self, menu_title: str, options: list) -> str:
-        result = self.menu_title_pattern.format(menu_title, self.menu_end_of_line_format)
+        result = self.menu_title_pattern.format(menu_title, self.menu_end_of_line)
         for option in options:
-            result += self.menu_row_pattern.format(option, self.menu_end_of_line_format)
+            result += self.menu_row_pattern.format(option, self.menu_end_of_line)
         return result
     
     
