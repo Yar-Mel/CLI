@@ -1,1 +1,5 @@
-# CLI v0.8.*
+# GoIT PythonWeb 13
+
+# project "Personal Assistant"
+
+# version 1.0.*
