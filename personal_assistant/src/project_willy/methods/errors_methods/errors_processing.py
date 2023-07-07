@@ -8,12 +8,12 @@ def error_handler(func) -> str:
     def wrapper(*args, **kwargs):
         try:
             result = func(*args, **kwargs)
-        # except IndexError:
-        #     print(ErrorsText.index_error_message)
-        # except KeyError:
-        #     print(ErrorsText.key_error_message)
-        # except TypeError:
-        #     print(ErrorsText.type_error_message)
+        except IndexError:
+            print(ErrorsText.index_error_message)
+        except KeyError:
+            print(ErrorsText.key_error_message)
+        except TypeError:
+            print(ErrorsText.type_error_message)
         except ValueError:
             print(ErrorsText.value_error_message)
         except NameError:
