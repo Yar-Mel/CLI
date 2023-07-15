@@ -1,8 +1,8 @@
 
-from project_willy.methods.imports import re, UserDict
-from project_willy.methods.records_book_methods.record_methods import Record
-from project_willy.methods.records_book_methods.records_representation_methods import RecordsBookRepr
-from project_willy.methods.records_book_methods.records_book_additional_methods import RecordsBookExtended
+from methods.imports import re, UserDict
+from methods.records_book_methods.record_methods import Record
+from methods.records_book_methods.records_representation_methods import RecordsBookRepr
+from methods.records_book_methods.records_book_additional_methods import RecordsBookExtended
 
 
 class RecordsBook(UserDict, RecordsBookRepr, RecordsBookExtended):

@@ -1,6 +1,6 @@
 
-from project_willy.methods.errors_methods import Return, ExitFromCLI
-from project_willy.settings import MenuReprSettings
+from methods.errors_methods import Return, ExitFromCLI
+from settings import MenuReprSettings
 
 
 class MenuGeneral(MenuReprSettings):
@@ -14,7 +14,7 @@ class MenuGeneral(MenuReprSettings):
     
     
 # OPTIONS HANDLER FOR MENU
-    def options_handler(self, user_command: str, options: dict) -> None:
+    def options_handler(self, user_command: str, options: dict) -> bool:
         command = user_command.strip().lower()
         if command in options:
             options[command]()

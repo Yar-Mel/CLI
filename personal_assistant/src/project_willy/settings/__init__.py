@@ -1,2 +1,2 @@
 
-from project_willy.settings.representation_settings import MenuReprSettings, RecordReprSettings, RecordsBookReprSettings, NotesReprSettings, NotesBookReprSettings
+from settings.representation_settings import MenuReprSettings, RecordReprSettings, RecordsBookReprSettings, NotesReprSettings, NotesBookReprSettings

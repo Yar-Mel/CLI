@@ -1,7 +1,7 @@
 
-from project_willy.methods import MenuGeneral, error_handler, autosave, RECORDS_BOOK
-from project_willy.text_fields import GeneralText, RecordsBookMenuText
-from project_willy.menu.main_menu_options.records_book_menu_options import AddRecordMenu, ChangeRecordMenu, ShowRecordsMenu, ImportMenu, ExportMenu
+from methods import MenuGeneral, error_handler, autosave, RECORDS_BOOK
+from text_fields import GeneralText, RecordsBookMenuText
+from menu.main_menu_options.records_book_menu_options import AddRecordMenu, ChangeRecordMenu, ShowRecordsMenu, ImportMenu, ExportMenu
 
 
 class RecordsBookMenu(MenuGeneral, GeneralText, RecordsBookMenuText):

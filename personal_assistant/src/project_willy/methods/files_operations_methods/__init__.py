@@ -1,2 +1,2 @@
 
-from project_willy.methods.files_operations_methods.files_operations_methods import FileOperations
+from methods.files_operations_methods.files_operations_methods import FileOperations

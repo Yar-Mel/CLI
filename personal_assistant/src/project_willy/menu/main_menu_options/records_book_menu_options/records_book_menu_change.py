@@ -1,7 +1,7 @@
 
-from project_willy.methods.imports import deepcopy
-from project_willy.methods import Record, MenuGeneral, autosave, error_handler, RECORDS_BOOK
-from project_willy.text_fields import GeneralText, ChangeRecordMenuText
+from methods.imports import deepcopy
+from methods import Record, MenuGeneral, autosave, error_handler, RECORDS_BOOK
+from text_fields import GeneralText, ChangeRecordMenuText
 
 
 class ChangeRecordMenu(MenuGeneral, GeneralText, ChangeRecordMenuText):

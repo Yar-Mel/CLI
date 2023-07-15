@@ -1,7 +1,7 @@
 
-from project_willy.methods.imports import Path, os
-from project_willy.methods import MenuGeneral, FileOperations, error_handler, RECORDS_BOOK
-from project_willy.text_fields import GeneralText, ExportMenuText
+from methods.imports import Path, os
+from methods import MenuGeneral, FileOperations, error_handler, RECORDS_BOOK
+from text_fields import GeneralText, ExportMenuText
 
 
 class ExportMenu(MenuGeneral, GeneralText, ExportMenuText, FileOperations):

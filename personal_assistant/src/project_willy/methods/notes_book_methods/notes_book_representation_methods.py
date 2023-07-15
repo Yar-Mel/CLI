@@ -1,6 +1,6 @@
 
-from project_willy.settings import NotesReprSettings, NotesBookReprSettings
-from project_willy.text_fields import MethodsText
+from settings import NotesReprSettings, NotesBookReprSettings
+from text_fields import MethodsText
 
 
 class NotesRepr(NotesReprSettings):

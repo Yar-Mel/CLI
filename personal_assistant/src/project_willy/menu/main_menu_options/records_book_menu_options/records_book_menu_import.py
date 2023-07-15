@@ -1,7 +1,7 @@
 
-from project_willy.methods.imports import Path
-from project_willy.methods import RecordsBook, MenuGeneral, FileOperations, error_handler, autosave, RECORDS_BOOK
-from project_willy.text_fields import GeneralText, ImportMenuText
+from methods.imports import Path
+from methods import RecordsBook, MenuGeneral, FileOperations, error_handler, autosave, RECORDS_BOOK
+from text_fields import GeneralText, ImportMenuText
 
 
 class ImportMenu(MenuGeneral, GeneralText, ImportMenuText):

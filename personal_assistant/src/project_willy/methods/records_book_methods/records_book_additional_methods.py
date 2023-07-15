@@ -1,5 +1,5 @@
 
-from project_willy.methods.imports import datetime, timedelta
+from methods.imports import datetime, timedelta
 
 
 class RecordsBookExtended:
@@ -32,7 +32,7 @@ class RecordsBookExtended:
     def records_book_for_csv(self) -> list:
         result = [['No', 'Name', 'Phones', 'Email', 'Birthday']]
         for indx, record in enumerate(self.data.values(), start=1):
-            record_data = [str(indx), record.name.get_str(), record.get_phones_str(), record.email.get_str(), record.birthday.get_str()]
+            record_data = [indx, record.name.get_str(), record.get_phones_str(), record.email.get_str(), record.birthday.get_str()]
             result.append(record_data)
         return result
 

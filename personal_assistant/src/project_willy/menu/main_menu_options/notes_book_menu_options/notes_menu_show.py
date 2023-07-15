@@ -1,6 +1,6 @@
 
-from project_willy.methods import MenuGeneral, error_handler, NOTES_BOOK
-from project_willy.text_fields import GeneralText, ShowNotesMenuText
+from methods import MenuGeneral, error_handler, NOTES_BOOK
+from text_fields import GeneralText, ShowNotesMenuText
 
 
 class ShowNotesMenu(MenuGeneral, GeneralText, ShowNotesMenuText):

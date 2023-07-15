@@ -1,8 +1,8 @@
 
-from project_willy.methods.imports import traceback
-from project_willy.methods import MenuGeneral, error_handler, clean_folder
-from project_willy.text_fields import GeneralText, MainMenuText
-from project_willy.menu.main_menu_options import RecordsBookMenu, NotesBookMenu
+from methods.imports import traceback
+from methods import MenuGeneral, error_handler, clean_folder
+from text_fields import GeneralText, MainMenuText
+from menu.main_menu_options import RecordsBookMenu, NotesBookMenu
 
 
 class MainMenu(MenuGeneral, GeneralText, MainMenuText):

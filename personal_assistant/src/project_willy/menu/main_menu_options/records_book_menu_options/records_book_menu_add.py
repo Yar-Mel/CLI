@@ -1,6 +1,6 @@
 
-from project_willy.methods import Record, MenuGeneral, autosave, error_handler, RECORDS_BOOK
-from project_willy.text_fields import GeneralText, AddRecordMenuText
+from methods import Record, MenuGeneral, autosave, error_handler, RECORDS_BOOK
+from text_fields import GeneralText, AddRecordMenuText
 
 
 class AddRecordMenu(MenuGeneral, GeneralText, AddRecordMenuText):

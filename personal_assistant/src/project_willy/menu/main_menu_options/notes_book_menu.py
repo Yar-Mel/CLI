@@ -1,7 +1,7 @@
 
-from project_willy.methods import MenuGeneral, autosave, error_handler, NOTES_BOOK
-from project_willy.text_fields import GeneralText, NotesMenuText
-from project_willy.menu.main_menu_options.notes_book_menu_options import AddNotesMenu, ChangeNotesMenu, ShowNotesMenu
+from methods import MenuGeneral, autosave, error_handler, NOTES_BOOK
+from text_fields import GeneralText, NotesMenuText
+from menu.main_menu_options.notes_book_menu_options import AddNotesMenu, ChangeNotesMenu, ShowNotesMenu
 
 
 class NotesBookMenu(MenuGeneral, GeneralText, NotesMenuText):

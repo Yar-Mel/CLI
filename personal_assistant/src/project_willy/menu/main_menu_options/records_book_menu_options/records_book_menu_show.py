@@ -1,6 +1,6 @@
 
-from project_willy.methods import MenuGeneral, error_handler, RECORDS_BOOK
-from project_willy.text_fields import GeneralText, ShowRecordsMenuText
+from methods import MenuGeneral, error_handler, RECORDS_BOOK
+from text_fields import GeneralText, ShowRecordsMenuText
 
 
 class ShowRecordsMenu(MenuGeneral, GeneralText, ShowRecordsMenuText):

@@ -1,6 +1,6 @@
 
-from project_willy.methods.records_book_methods.record_fields_methods import Name, Phone, Email, Birthday
-from project_willy.methods.records_book_methods.records_representation_methods import RecordRepr
+from methods.records_book_methods.record_fields_methods import Name, Phone, Email, Birthday
+from methods.records_book_methods.records_representation_methods import RecordRepr
 
 
 class Record(RecordRepr):

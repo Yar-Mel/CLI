@@ -1,7 +1,7 @@
 
-from project_willy.methods.imports import UserList, UserDict, datetime
-from project_willy.methods.errors_methods import NotesError
-from project_willy.methods.notes_book_methods.notes_book_representation_methods import NotesBookRepr, NotesRepr
+from methods.imports import UserList, UserDict, datetime
+from methods.errors_methods import NotesError
+from methods.notes_book_methods.notes_book_representation_methods import NotesBookRepr, NotesRepr
 
 class Notes(UserDict, NotesRepr):
     def __init__(self) -> None:
